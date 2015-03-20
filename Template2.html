@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
-    <title>Waypoints in directions</title>
+    <title>SuperPrix Protótipo Rota</title>
     <style>
       html, body, #map-canvas {
         height: 100%;
@@ -40,16 +40,25 @@ function initialize() {
 
 function calcRoute() {
   var start = document.getElementById('start').value;
-  var end = document.getElementById('start').value;
-  var waypts = [];
+  var circular = document.getElementById('circular').checked;
   var checkboxArray = document.getElementById('waypoints');
+  var end = "";
+  
+    var waypts = [];
+  
   for (var i = 0; i < checkboxArray.length; i++) {
     if (checkboxArray.options[i].selected == true) {
       waypts.push({
           location:checkboxArray[i].value,
           stopover:true});
+		  
+		  end = checkboxArray[i].value;
     }
   }
+  
+  if(circular)
+	end = document.getElementById('start').value;
+
 
   var request = {
       origin: start,
@@ -94,6 +103,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
     <select id="start">
       #origem
     </select>
+	<br>
+	<br>
+	<input id="circular" type="checkbox" checked/>
+	<label for="circular"> Rota circular </label>
     <br>
 	<br>
     <b>Entregas:</b> <br>
